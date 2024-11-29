@@ -1,0 +1,63 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "schema for docusign envelope status",
+  "properties": {
+    "envelope_uuid": { "type": "string" },
+    "recipients": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "identifier": { "type": "string" },
+          "client_user_id": { "type": "string" },
+          "name": { "type": "string" },
+          "email": { "type": "string" },
+          "routing_order": { "type": "integer" },
+          "recipient_type": { "type": "string" },
+          "statuses": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "enum": [
+                    "Created",
+                    "Sent",
+                    "Delivered",
+                    "Signed",
+                    "Declined",
+                    "Completed",
+                    "FaxPending",
+                    "AutoResponded"
+                  ]
+                },
+                "entered_at": { "type": "string", "format": "date-time" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "statuses": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "enum": [
+              "Created",
+              "Deleted",
+              "Sent",
+              "Delivered",
+              "Signed",
+              "Completed",
+              "Declined",
+              "Voided"
+            ]
+          },
+          "entered_at": { "type": "string", "format": "date-time" }
+        }
+      }
+    }
+  }
+}

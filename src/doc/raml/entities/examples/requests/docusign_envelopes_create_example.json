@@ -1,0 +1,34 @@
+{
+  "program_identifier": "california_first",
+  "document_set_name": "financing_documents",
+  "recipients": [
+    {
+      "name": "Person Guy",
+      "email": "person@email.com",
+      "identifier": "123-abc",
+      "id_check": true,
+      "recipient_type": "owner",
+      "routing_order": "1",
+      "client_user_id": "123-abc"
+    },
+    {
+      "name": "A Person",
+      "email": "email@person.com",
+      "identifier": "890-xyz",
+      "id_check": true,
+      "recipient_type": "contractor",
+      "routing_order": "1",
+      "client_user_id": "890-xyz"
+    }
+  ],
+  "documents": [
+    {
+      "name": "horses.docx",
+      "data": "Base64 encoded data"
+    },
+    {
+      "name": "ponies.docx",
+      "data": "Base64 encoded data"
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+- Effect: "Allow"
+  Action:
+    - lambda:*
+    - sns:*
+    - s3:*
+    - ses:*
+
+  Resource: "*"
+
+- Effect: Allow
+  Action:
+    - dynamodb:Query
+    - dynamodb:Scan
+    - dynamodb:GetItem
+    - dynamodb:PutItem
+    - dynamodb:UpdateItem
+    - dynamodb:DeleteItem
+  Resource:
+    - "arn:aws:dynamodb:${env:region}:*:table/${env:APP_PREFIX}-${env:env}-${env:DBT_AVM}"
+    - "arn:aws:dynamodb:${env:region}:*:table/${env:APP_PREFIX}-${env:env}-${env:DBT_AVM_RAW_DATA}"
+    
+    
+- Effect: Allow
+  Action:
+    - dynamodb:Query
+    - dynamodb:Scan
+  Resource:
+    - "arn:aws:dynamodb:${env:region}:*:table/${env:APP_PREFIX}-${env:env}-${env:DBT_AVM}/index/*"
+    - "arn:aws:dynamodb:${env:region}:*:table/${env:APP_PREFIX}-${env:env}-${env:DBT_AVM_RAW_DATA}/index/*"

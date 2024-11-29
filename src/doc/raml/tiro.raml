@@ -1,0 +1,154 @@
+#%RAML 1.0
+---
+title: Tiro
+version: 1.0.0
+baseUri: https://tiro.{environment}.renewfund.com
+baseUriParameters:
+  environment:
+    description: The deployed environment
+    type: string
+
+traits:
+  secured:
+    usage: Apply to any method that must be secured for API access
+    headers:
+      Api-Token:
+        type: string
+        description: API token for authentication
+      Api-Version:
+        type: string
+        description: API version
+    queryParameters:
+      api_token:
+        type: string
+        description: API token for authentication ** pending **
+      api_version:
+        type: string
+        description: API version ** pending **
+
+/docusign_connect:
+  is: [secured]
+  post:
+    description: |
+      (from DocuSign) DocuSign Connect callback URL
+      Records Connect XML payload and creates records for the Envelope, Recipients,
+      and their respective statuses.
+    queryParameters:
+      program:
+        type: string
+        description: "Financing program identifier (california_first or re_home)"
+    body:
+      application/xml:
+        schema: !include entities/schema/requests/docusign_connect.xsd
+        example: !include entities/examples/requests/docusign_connect.xml
+
+/docu_sign:
+  /envelopes:
+    is: [ secured ]
+    post:
+      description: |
+        Create a DocuSign envelope
+      body:
+        application/json:
+          schema: !include entities/schema/requests/docusign_envelopes_create_schema.json
+          example: !include entities/examples/requests/docusign_envelopes_create_example.json
+      responses:
+        200:
+          body:
+            application/json:
+              schema: !include entities/schema/responses/docusign_envelopes_create_schema.json
+              example: !include entities/examples/responses/docusign_envelopes_create_example.json
+
+    /{envelopeUuid}:
+      get:
+        description: |
+          Retrieve data about a DocuSign envelope
+        responses:
+          200:
+            body:
+              application/json:
+                schema: !include entities/schema/responses/docusign_envelope_status_schema.json
+                example: !include entities/examples/responses/docusign_envelope_status_example.json
+
+/signature_requests:
+  is: [ secured ]
+  /{signatureId}:
+    /recipients:
+      /{recipientId}:
+        patch:
+          description: |
+            Make changes to a DocuSign recipient. Currently calls with "program=california_first"
+            queryParam are treated as a passthrough to Panda. All other calls are
+            send directly to Docusign on behalf of the caller.
+          queryParameters:
+            program:
+              type: string
+              description: "Financing program identifier (california_first or re_home)"
+          body:
+            application/json:
+              schema: !include entities/schema/requests/recipient_correction_schema.json
+              example: !include entities/examples/requests/recipient_correction_example.json
+          is: [secured]
+          responses:
+            200:
+              description: "Empty response"
+            400:
+              body:
+                application/json:
+                  schema: !include entities/schema/responses/error_schema.json
+                  example: !include entities/examples/responses/error_example.json
+        /signing_url:
+          get:
+            description: |
+              Example url: <root>/signature_requests/2DEEBD9B-8C46-463A-996B-95266D961B9B/recipients/76d89300-edf3-453f-9777-d7dcd0090313/signing_url?url=http://some/url.com&user_name=GOLDEN%20PATH&user_email=itdummy%2BG_PATH03380%40renewfinancial.com
+              Get a URL for embedded signing for an e-sign recipient
+            queryParameters:
+              return_url:
+                type: string
+                description: "URL to redirect user to after signing is complete"
+            is: [secured]
+            responses:
+              200:
+                body:
+                  application/json:
+                    schema: !include entities/schema/responses/signing_url_schema.json
+                    example: !include entities/examples/responses/signing_url_example.json
+              400:
+                body:
+                  application/json:
+                    schema: !include entities/schema/responses/error_schema.json
+                    example: !include entities/examples/responses/error_example.json
+        /resend_email:
+          post:
+            description: "Resend the DocuSign email for this envelope to this recipient"
+            queryParameters:
+              name:
+                type: string
+                description: "Recipient's full name. Needed until Tiro has persistence"
+            is: [secured]
+            responses:
+              200:
+                description: "Empty response"
+              400:
+                body:
+                  application/json:
+                    schema: !include entities/schema/responses/error_schema.json
+                    example: !include entities/examples/responses/error_example.json
+
+/health_check:
+  get:
+    description: This is an endpoint that reports several statistics about the state of the app.
+    responses:
+      200:
+        body:
+          text/json:
+            example: !include entities/examples/responses/health_check_response.json
+            type: !include entities/schema/responses/health_check_response_schema.json
+
+/health_check/accepts_lb_traffic:
+  get:
+    description: Used by the load balancers to determine if the app process is able to accept incoming traffic.
+    responses:
+      200:
+        body:
+          text/html:

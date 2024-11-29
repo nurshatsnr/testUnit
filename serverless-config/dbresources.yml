@@ -1,0 +1,88 @@
+avm:
+  Type: "AWS::DynamoDB::Table"
+  Properties:
+    AttributeDefinitions:
+      - AttributeName: "appName"
+        AttributeType: "S"
+      - AttributeName: "creationDate"
+        AttributeType: "S"
+      - AttributeName: "requestId"
+        AttributeType: "S"
+      - AttributeName: "applicationId"
+        AttributeType: "S"
+      - AttributeName: "dateOfBirth"
+        AttributeType: "S" 
+      - AttributeName: "ssn"
+        AttributeType: "S"                
+    KeySchema:
+      - AttributeName: "appName"
+        KeyType: "HASH"
+      - AttributeName: "creationDate"
+        KeyType: "RANGE"
+    ProvisionedThroughput:
+      ReadCapacityUnits: "5"
+      WriteCapacityUnits: "5"
+    TableName: "${env:APP_PREFIX}-${env:env}-${env:DBT_AVM}"
+    LocalSecondaryIndexes:
+      - IndexName: "LSI_requestId"
+        KeySchema:
+          - AttributeName: "appName"
+            KeyType: "HASH"
+          - AttributeName: "requestId"
+            KeyType: "RANGE"
+        Projection:
+          ProjectionType: "ALL"
+      - IndexName: "LSI_applicationId"
+        KeySchema:
+          - AttributeName: "appName"
+            KeyType: "HASH"
+          - AttributeName: "applicationId"
+            KeyType: "RANGE"
+        Projection:
+          ProjectionType: "ALL"
+      - IndexName: "LSI_dateOfBirth"
+        KeySchema:
+          - AttributeName: "appName"
+            KeyType: "HASH"
+          - AttributeName: "dateOfBirth"
+            KeyType: "RANGE"
+        Projection:
+          ProjectionType: "ALL"  
+      - IndexName: "LSI_ssn"
+        KeySchema:
+          - AttributeName: "appName"
+            KeyType: "HASH"
+          - AttributeName: "ssn"
+            KeyType: "RANGE"
+        Projection:
+          ProjectionType: "ALL"                    
+
+avmrawdata:
+  Type: "AWS::DynamoDB::Table"
+  Properties:
+    AttributeDefinitions:
+      - AttributeName: "appName"
+        AttributeType: "S"
+      - AttributeName: "creationDate"
+        AttributeType: "S"
+      - AttributeName: "inBoundRequestld"
+        AttributeType: "S"
+    KeySchema:
+      - AttributeName: "appName"
+        KeyType: "HASH"
+      - AttributeName: "creationDate"
+        KeyType: "RANGE"
+    ProvisionedThroughput:
+      ReadCapacityUnits: "5"
+      WriteCapacityUnits: "5"
+    TableName: "${env:APP_PREFIX}-${env:env}-${env:DBT_AVM_RAW_DATA}"
+    LocalSecondaryIndexes:
+      - IndexName: "LSI_inBoundRequestld"
+        KeySchema:
+          - AttributeName: "appName"
+            KeyType: "HASH"
+          - AttributeName: "inBoundRequestld"
+            KeyType: "RANGE"
+        Projection:
+          ProjectionType: "ALL"
+        

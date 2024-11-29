@@ -1,0 +1,10 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "schema for a DocuSign recipient correction",
+  "properties": {
+    "email": { "type": "string" },
+    "name": { "type": "string" },
+    "routing_order": { "type": "integer" },
+    "id_check": { "type": "boolean" }
+  }
+}

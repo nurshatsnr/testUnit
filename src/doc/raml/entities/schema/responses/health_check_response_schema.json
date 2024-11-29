@@ -1,0 +1,37 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "This is an endpoint that reports several statistics about the state of the app",
+  "type": "object",
+  "required": [
+    "delayed_job_running",
+    "delayed_job_monitor_running",
+    "number_of_thins_running",
+    "host",
+    "rf_env",
+    "app_env",
+    "revision"
+  ],
+  "properties": {
+    "delayed_job_running": {
+      "type": "boolean"
+    },
+    "delayed_job_monitor_running": {
+      "type": "boolean"
+    },
+    "number_of_thins_running": {
+      "type": "integer"
+    },
+    "host": {
+      "type": "string"
+    },
+    "rf_env": {
+      "type": "string"
+    },
+    "app_env": {
+      "type": "string"
+    },
+    "revision": {
+      "type": "string"
+    }
+  }
+}

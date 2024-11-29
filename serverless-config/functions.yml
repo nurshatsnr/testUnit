@@ -1,0 +1,131 @@
+docusign_connect:
+  handler: src/handlers/docusign/connect_messages_controller.ConnectMessagesController
+  events:
+    - http:
+        path: docusign_connect
+        method: POST
+        consumes:
+            - application/xml
+        produces:
+            - application/xml
+        cors:
+          origin: "*"
+          # origins: ${self:custom.${self:custom.pEnvironment}-cors-origin-array}
+          headers:
+            - Content-Type
+            # - Authorization
+            - X-Api-Key
+            - _X_AMZN_TRACE_ID
+            - trackingId
+        private: true
+        # request:
+        #   schemas:
+        #     application/json: SampleSchema
+        bodyType: DocuSignEnvelopeInformation     
+        # authorizer:
+        #   arn: arn:aws:cognito-idp:${env:region}:${env:ACCOUNT_ID}:userpool/${env:pool_id}
+        #   scopes:
+        #     - ${env:COG_SCOPE_API_USR2}                    
+
+# createEnvelope:
+#   handler: src/handlers/docusignMgmt.create_envelope
+#   events:
+#     - http:
+#         path: docu_sign/envelopes
+#         method: POST
+#         cors:
+#           origin: "*"
+#           headers:
+#             - Content-Type
+#             # - Authorization
+#             - X-Api-Key
+#             - _X_AMZN_TRACE_ID
+#             - trackingId
+#         request:
+#           parameters:
+#             querystrings:
+#               program_identifier: true
+#               document_set_name: true
+
+getEnvelope:
+  handler: src/handlers/docusignMgmt.get_envelope
+  events:
+    - http:
+        path: docu_sign/envelopes/{envelope_uuid}
+        method: GET
+        cors:
+          origin: "*"
+          headers:
+            - Content-Type
+            # - Authorization
+            - X-Api-Key
+            - _X_AMZN_TRACE_ID
+            - trackingId
+        request:
+          parameters:
+            paths:
+              envelope_uuid: true              
+
+signingUrl:
+  handler: src/handlers/signing_url.fetchUrl
+  events:
+    - http:
+        path: signature_requests/{signature_id}/recipients/{recipient_id}/signing_url
+        method: GET
+        cors:
+          origin: "*"
+          headers:
+            - Content-Type
+            # - Authorization
+            - X-Api-Key
+            - _X_AMZN_TRACE_ID
+            - trackingId
+        request:
+          parameters:
+            paths:
+              signature_id: true
+              recipient_id: true
+                     
+
+updateRecipient:
+  handler: src/handlers/updateRecipientController.recipientUpdate
+  events:
+    - http:
+        path: signature_requests/{signature_id}/recipients/{recipient_id}
+        method: PATCH
+        cors:
+          origin: "*"
+          headers:
+            - Content-Type
+            # - Authorization
+            - X-Api-Key
+            - _X_AMZN_TRACE_ID
+            - trackingId
+        request:
+          parameters:
+            paths:
+              signature_id: true
+              recipient_id: true   
+        bodyType: 'UpdateRecipientRequest'
+
+resendEmail:
+  handler: src/handlers/resend_email.resendEnvelopeEmail
+  events:
+    - http:
+        path: signature_requests/{signature_id}/recipients/{recipient_id}/resend_email
+        method: POST
+        cors:
+          origin: "*"
+          headers:
+            - Content-Type
+            # - Authorization
+            - X-Api-Key
+            - _X_AMZN_TRACE_ID
+            - trackingId
+        request:
+          parameters:
+            paths:
+              signature_id: true
+              recipient_id: true                            
+
+

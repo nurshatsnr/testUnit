@@ -1,0 +1,76 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "schema for a docusign envelope",
+  "properties": {
+    "email": {
+      "type": "object",
+      "properties": {
+        "subject": { "type": "string" },
+        "blurb": { "type": "string" }
+      }
+    },
+    "reminder": {
+      "type": "object",
+      "properties": {
+        "delay": { "type": "integer" },
+        "frequency": { "type": "integer" }
+      }
+    },
+    "expiration": {
+      "type": "object",
+      "properties": {
+        "after": { "type": "integer" },
+        "warn": { "type": "integer" }
+      }
+    },
+    "recipients": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "email": { "type": "string" },
+          "name": { "type": "string" },
+          "routing_order": { "type": "integer" },
+          "id_check": { "type": "boolean" },
+          "recipient_type": {
+            "enum": [
+              "signer",
+              "agent",
+              "editor",
+              "intermediary",
+              "carbon_copy",
+              "certified_delivery",
+              "in_person_signer"
+            ]
+          },
+          "relationship_to_application": { "type": "string" }
+        }
+      }
+    },
+    "documents": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "data": { "type": "string" }
+        }
+      }
+    },
+    "custom_tabs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "type": { "type": "string" },
+          "coordinates": {
+            "type": "array",
+            "items": { "type": "integer" }
+          },
+          "anchor_suffix": { "type": "string" },
+          "width": { "type": "integer" }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "delayed_job_running": false,
+  "delayed_job_monitor_running": false,
+  "number_of_thins_running": 0,
+  "host": "IG-C07KDBSUDWYL.ds.renewfund.com",
+  "rf_env": "development",
+  "app_env": "development",
+  "revision": "f9ab924"
+}

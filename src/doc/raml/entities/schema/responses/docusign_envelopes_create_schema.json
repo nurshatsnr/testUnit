@@ -1,0 +1,7 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "The envelope uuid received from DocuSign",
+  "properties": {
+    "envelope_uuid": { "type": "string" }
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "envelope_uuid": "6BB0E5D5-EBC6-428A-9155-DC709B5B27A8",
+  "recipients": [
+    {
+      "identifier": "4F489FA7-560E-4055-95B1-48669BCF1BB1",
+      "client_user_id": "1111",
+      "name": "Oscar D. Grouch",
+      "email": "oscar@example.com",
+      "routing_order": 1,
+      "recipient_type": "carbon_copy",
+      "statuses": [
+        {
+          "name": "Created",
+          "entered_at": "2015-08-15T05:18:00Z"
+        },
+        {
+          "name": "Sent",
+          "entered_at": "2015-08-16T13:09:00Z"
+        }
+      ]
+    },
+    {
+      "identifier": "17B339C0-DE1F-4D0B-9DEF-81984B3948AD",
+      "client_user_id": "11112",
+      "name": "Perry Scope",
+      "email": "perry@example.com",
+      "routing_order": 2,
+      "recipient_type": "signer",
+      "statuses": [
+        {
+          "name": "Created",
+          "entered_at": "2015-08-15T05:18:00Z"
+        },
+        {
+          "name": "Sent",
+          "entered_at": "2015-08-16T13:09:00Z"
+        }
+      ]
+    }
+  ],
+  "statuses": [
+    {
+      "name": "Sent",
+      "entered_at": "2015-08-15T05:18:00Z"
+    },
+    {
+      "name": "Delivered",
+      "entered_at": "2015-08-16T13:09:00Z"
+    }
+  ]
+}

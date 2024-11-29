@@ -1,0 +1,82 @@
+service: tiro
+
+useDotenv: true
+frameworkVersion: ">=1.1.0 <4.0.0"
+
+plugins:
+  - serverless-auto-swagger
+  - serverless-webpack
+  - serverless-dotenv-plugin
+  - serverless-offline
+  # - serverless-dynamo-stream-plugin
+  # - serverless-dynamodb-local
+  - serverless-plugin-log-retention
+  - serverless-deployment-bucket
+  - serverless-domain-manager   
+
+custom:
+  accountId: !Ref AWS::AccountId
+  pEnvironment: ${opt:stage, self:provider.stage}
+  logRetentionInDays: ${env:logRetentionInDays}
+  autoswagger:
+    title: 'Tiro-Js APIs'
+    typefiles: [ './src/types/requests.d.ts' ]
+    generateSwaggerOnDeploy: true
+    basePath: /${env:DOMAIN_NAME_PATH}
+    schemes: [ 'https', 'http' ]
+    apiKeyHeaders: [ 'Api-Token', 'x-api-key','Authorization' ]
+    host: ${env:DOMAIN_NAME}
+    apiType: 'http'
+    swaggerPath: "swagger"
+  webpack:
+    webpackConfig: "webpack.config.js" # Name of webpack configuration file
+    includeModules: false # Node modules configuration for packaging
+    packager: "yarn" # Packager that will be used to package your external modules
+
+  # dynamodb:
+  #   stages:
+  #     - test
+
+  customDomain:
+    domainName: ${env:DOMAIN_NAME}
+    basePath: ${env:DOMAIN_NAME_PATH}
+    stage: ${self:provider.stage}
+
+provider:
+  name: aws
+  stage: ${opt:stage, 'test'}
+  runtime: nodejs20.x
+  apiGateway:
+    apiKeys:
+      - ${env:API_KEY}
+    request:
+      schemas: ${file(./serverless-config/api-schema-info/api-schema-ref.yml)}
+    minimumCompressionSize: 1024 # Adjust according to your requirements
+
+  vpc:
+    securityGroupIds:
+      - ${env:AWS_SG_ID}
+    subnetIds:
+      - ${env:AWS_SUBNET_ID}
+
+  versionFunctions: false
+  timeout: 30 # The default is 6 seconds. Note: API Gateway current maximum is 30 seconds
+  websocketsApiRouteSelectionExpression: $request.body.action
+  logs:
+    websocket:
+      level: ERROR
+
+  deploymentBucket:
+    name: ${env:env}-${env:PROJECT_NM}
+    maxPreviousDeploymentArtifacts: 5
+
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - "dynamodb:*"
+      Resource:
+        - "*"
+
+functions: ${file(./serverless-config/functions.yml)}
+# resources:
+#   Resources: ${file(./serverless-config/dbresources.yml)}

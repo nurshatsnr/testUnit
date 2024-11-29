@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<DocuSignEnvelopeInformation xmlns:xsd='http://www.w3.org/2001/XMLSchema' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns='http://www.docusign.net/API/3.0'>
+  <EnvelopeStatus>
+    <RecipientStatuses>
+      <RecipientStatus>
+        <Type>Signer</Type>
+        <Email>test@example.com</Email>
+        <UserName>Test Testington</UserName>
+        <RoutingOrder>1</RoutingOrder>
+        <Sent>2015-02-26T11:03:09.603</Sent>
+        <Delivered>2015-02-26T11:04:17.437</Delivered>
+        <Signed>2015-02-26T11:04:59.027</Signed>
+        <Status>Completed</Status>
+        <ClientUserId>aa383cc5-e441-405b-bdeb-236ce9499dc1</ClientUserId>
+        <RecipientId>4959f6ec-64d8-45d3-9b1f-49ba048a95f4</RecipientId>
+      </RecipientStatus>
+      <RecipientStatus>
+        <Type>CarbonCopy</Type>
+        <Email>oakley.sage@example.com</Email>
+        <UserName>Oakley Sage</UserName>
+        <RoutingOrder>1</RoutingOrder>
+        <Sent>2015-02-26T11:03:09.603</Sent>
+        <Status>Completed</Status>
+        <ClientUserId>f226e964-edcb-419a-96b3-c8a277857fe4</ClientUserId>
+        <RecipientId>2fe951f9-f3b3-4eec-835e-6991b7e79cb6</RecipientId>
+      </RecipientStatus>
+    </RecipientStatuses>
+    <EnvelopeID>fake-financing-documents-request-identifier</EnvelopeID>
+    <Status>Completed</Status>
+    <Created>2015-02-26T11:03:07.653</Created>
+    <Sent>2015-02-26T11:03:09.633</Sent>
+    <Delivered>2015-02-26T11:04:17.53</Delivered>
+    <Signed>2015-02-26T11:04:59.043</Signed>
+    <Completed>2015-02-26T11:04:59.043</Completed>
+  </EnvelopeStatus>
+  <TimeZone>Pacific Standard Time</TimeZone>
+  <TimeZoneOffset>-8</TimeZoneOffset>
+</DocuSignEnvelopeInformation>

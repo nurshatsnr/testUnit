@@ -1,0 +1,9 @@
+email:
+  subject: "CaliforniaFIRST Financing Documents"
+  blurb: "Thank you for financing your home energy improvements through the CaliforniaFIRST Program. This email provides Financing Documents for your signature. You must sign the necessary documents within 5 days of receiving this email. You can continue to use this link to return to DocuSign and download your materials. If you have any questions, please call us at (844) 589-7953."
+reminder:
+  delay: 3
+  frequency: 0
+expiration:
+  after: 30
+  warn: 5

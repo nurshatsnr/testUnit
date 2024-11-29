@@ -1,0 +1,4 @@
+SampleSchema:
+  name: SampleModel
+  schema: ${file(./serverless-config/api-schema-info/sample-schema.json)}
+  description: "This is a sample. Please make necessary changes accordingly"
